@@ -24,6 +24,10 @@ if [ -z "$POSTGRES_USER" ]; then
   exit 1
 fi
 
+if [ -f "$POSTGRES_PASSWORD_FILE" ]; then
+  export POSTGRES_PASSWORD=$(cat $POSTGRES_PASSWORD_FILE)
+fi
+
 if [ -z "$POSTGRES_PASSWORD" ]; then
   echo "You need to set the POSTGRES_PASSWORD environment variable."
   exit 1
@@ -35,10 +39,18 @@ else
   aws_args="--endpoint-url $S3_ENDPOINT"
 fi
 
+if [ -f "$S3_ACCESS_KEY_ID_FILE" ]; then
+  export S3_ACCESS_KEY_ID=$(cat $S3_ACCESS_KEY_ID_FILE)
+fi
 
 if [ -n "$S3_ACCESS_KEY_ID" ]; then
   export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID
 fi
+
+if [ -f "$S3_SECRET_ACCESS_KEY_FILE" ]; then
+  export S3_SECRET_ACCESS_KEY=$(cat $S3_SECRET_ACCESS_KEY_FILE)
+fi
+
 if [ -n "$S3_SECRET_ACCESS_KEY" ]; then
   export AWS_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY
 fi
