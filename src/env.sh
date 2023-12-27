@@ -56,3 +56,7 @@ if [ -n "$S3_SECRET_ACCESS_KEY" ]; then
 fi
 export AWS_DEFAULT_REGION=$S3_REGION
 export PGPASSWORD=$POSTGRES_PASSWORD
+
+if [ -f "$PASSPHRASE_FILE" ]; then
+  export PASSPHRASE=$(cat $PASSPHRASE_FILE)
+fi
